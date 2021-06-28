@@ -5,13 +5,19 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title><?php 
+    <!--- 
+    <title> <?php 
     require "admin/includes/dbh.php"; 
     $query =  "SELECT * FROM recursos";
     $result = mysqli_query($conn, $query);
-    echo $result->num_rows;;
+    echo $result->num_rows;
     
-    ?> </title>
+    ?> </title>> -->
+
+    <title>Qwavee</title>
+
+    
+    
     <meta name="description" content="">
     <meta name="author" content="">
 

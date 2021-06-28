@@ -1,3 +1,12 @@
+<?php 
+require "includes/dbh.php";
+$sqlTecnologias = "SELECT * FROM tecnologias";
+$queryTecnologias = mysqli_query($conn, $sqlTecnologias);
+$numTecnologias = $queryTecnologias->num_rows;
+?>
+
+
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -24,7 +33,25 @@
                             Tecnologías
                         </h1>
                     </div>
-                </div> 
+                </div>
+
+                <?php
+                    if (isset($_REQUEST['addtecnologia'])){
+                        if ($_REQUEST['addtecnologia'] == "success"){
+                            echo "<div class='alert alert-success'>
+                                 ¡Tecnología agregada con <strong>Éxito</strong>!
+                            </div>";
+                        }
+                        else if ($_REQUEST['addtecnologia'] == "error"){
+                            echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Hubo un error inesperado y la Tecnología no pudo ser agregada.
+                       </div>";
+                        }
+                    };
+                ?>
+
+
+
   <!-- /. ROW  -->
   <div class="row">
                 <div class="col-lg-12">
@@ -35,20 +62,20 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form role="form">
+                                    <form role="form" method="POST" action="includes/add-tecnologia.php">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input class="form-control">
+                                            <input class="form-control" name="tecnologia-nombre">
                                         </div>
                                         <div class="form-group">
                                             <label>Meta Title</label>
-                                            <input class="form-control">
+                                            <input class="form-control" name="tecnologia-meta-title">
                                         </div>
                                         <div class="form-group">
                                             <label>Tecnology Path</label>
-                                            <input class="form-control">
+                                            <input class="form-control" name="tecnologia-path">
                                         </div>
-                                        <button type="submit" class="btn btn-default">Agregar Tecnologia</button>
+                                        <button type="submit" class="btn btn-default" name="add-tecnologia-btn">Agregar Tecnologia</button>
                                     </form>
                                 </div>
                             </div>
@@ -74,17 +101,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php
+                                        $counter = 0;
+                                        while ($rowTecnologias = mysqli_fetch_assoc($queryTecnologias)){
+                                            $counter++;
+
+                                            $id = $rowTecnologias['n_tecnologia_id'];
+                                            $name = $rowTecnologias['v_tecnologia_nombre'];
+                                            $metaTitle = $rowTecnologias['v_tecnologia_meta_title'];
+                                            $tecnologiaPath = $rowTecnologias['v_tecnologia_path'];
+
+                                        ?>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td><?php echo $counter ?></td>
+                                            <td><?php echo $name ?></td>
+                                            <td><?php echo $metaTitle ?></td>
+                                            <td><?php echo $tecnologiaPath ?></td>
                                             <td>
                                                 <button>Ver</button>
                                                 <button>Editar</button>
                                                 <button>Borrar</button>
                                             </td>
                                         </tr>
+
+                                        <?php
+                                        }
+
+                                        ?>
+
+                                 
                                     </tbody>
                                 </table>
                             </div>
