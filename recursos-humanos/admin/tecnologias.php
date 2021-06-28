@@ -47,7 +47,31 @@ $numTecnologias = $queryTecnologias->num_rows;
                             <strong>¡Error!</strong> Hubo un error inesperado y la Tecnología no pudo ser agregada.
                        </div>";
                         }
-                    };
+                    }
+                    else if (isset($_REQUEST['editartecnologia'])){
+                        if ($_REQUEST['editartecnologia'] == "success"){
+                            echo "<div class='alert alert-success'>
+                                 ¡Los cambios en la Tecnología fueron guardados con <strong>Éxito</strong>!
+                            </div>";
+                        }
+                        else if ($_REQUEST['editartecnologia'] == "error"){
+                            echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Hubo un error inesperado y los cambios en la Tecnología no puedieron ser guardados.
+                       </div>";
+                        }
+                    }
+                    else if (isset($_REQUEST['borrartecnologia'])){
+                        if ($_REQUEST['borrartecnologia'] == "success"){
+                            echo "<div class='alert alert-success'>
+                                 ¡La tecnología fue borrada con <strong>Éxito</strong>!
+                            </div>";
+                        }
+                        else if ($_REQUEST['borrartecnologia'] == "error"){
+                            echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Hubo un error inesperado y la Tecnología no pudo ser guardada.
+                       </div>";
+                        }
+                    }
                 ?>
 
 
@@ -118,10 +142,68 @@ $numTecnologias = $queryTecnologias->num_rows;
                                             <td><?php echo $metaTitle ?></td>
                                             <td><?php echo $tecnologiaPath ?></td>
                                             <td>
-                                                <button>Ver</button>
-                                                <button>Editar</button>
-                                                <button>Borrar</button>
+                                                <button class = "popup-button" 
+                                                onclick="window.open('../tecnologias.php?group=<?php echo $tecnologiaPath; ?>', 
+                                                '_blank');">Ver</button>
+                                                <button data-toggle="modal" data-target="#edit<?php 
+                                                echo $id; ?>" class="popup-button">Editar</button>
+                                                <button data-toggle="modal" data-target="#borrar<?php 
+                                                echo $id; ?>" class="popup-button">Borrar</button>
                                             </td>
+                                            <div class="modal fade" id="edit<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="includes/editar-tecnologia.php">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title" id="myModalLabel">Editar Tecnologia</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="tecnologia-id" value="<?php echo $id; ?>"></input>
+                                                                <div class="form-group">
+                                                                    <label>Nombre</label>
+                                                                    <input class="form-control" name="editar-nombre-tecnologia"
+                                                                     value="<?php echo $name; ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Meta Title</label>
+                                                                    <input class="form-control" name="editar-meta-title-tecnologia"
+                                                                     value="<?php echo $metaTitle; ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Tecnología Path</label>
+                                                                    <input class="form-control" name="editar-tecnologia-path"
+                                                                     value="<?php echo $tecnologiaPath; ?>">
+                                                                </div>
+                                                            </div>
+                                                                                                        <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                                <button type="submit" class="btn btn-primary" name="editar-tecnologia-btn">Guardar Cambios</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade" id="borrar<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="includes/borrar-tecnologia.php">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title" id="myModalLabel">Borrar Tecnologia</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="tecnologia-id" value="<?php echo $id; ?>"></input>
+                                                                <p>¿Esta seguro que desea borrar esa Tecnología?</p>
+                                                            </div>
+                                                                                                        <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                                <button type="submit" class="btn btn-primary" name="borrar-tecnologia-btn">Borrar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </tr>
 
                                         <?php
