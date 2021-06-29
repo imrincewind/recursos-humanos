@@ -13,7 +13,7 @@
                         <a href="recursos.php"><i class="fa fa-bar-chart-o"></i>Recursos</a>
                     </li>
                     <li>
-                        <a href="add-recurso.php"><i class="fa fa-qrcode"></i>Agregar Recurso</a>
+                        <a href="crear-recurso.php"><i class="fa fa-qrcode"></i>Crear Recurso</a>
                     </li>
 
                     
