@@ -28,13 +28,64 @@ require "includes/dbh.php";
 
         <div id="page-wrapper" >
             <div id="page-inner">
-			 <div class="row">
+			    <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
                             Crear Recurso
                         </h1>
                     </div>
                 </div> 
+
+                <?php 
+                
+                if (isset($_REQUEST['addrecurso'])){
+                    if ($_REQUEST['addrecurso'] == "emptyname"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Debe escribir un nombre.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "emptydatos"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Debe agregar datos personales.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "emptyestudios"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Debe agregar estudios cursados.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "emptytecnologia"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Debe seleccionar una tecnología.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "emptypath"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Debe agregar un path.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "pathcontainsspaces"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> El path no puede contener espacios.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "nombreusado"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> El nombre ya existe.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "pathusado"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> El path ya existe, debe elegir uno distinto.
+                            </div>";
+                    }
+                    else  if ($_REQUEST['addrecurso'] == "erroragregarrecurso"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Surgió un problema con la base de datos. Por favor, vuelva a intentarlo.
+                            </div>";
+                    } else  if ($_REQUEST['addrecurso'] == "errorlugarindex"){
+                        echo "<div class='alert alert-danger'>
+                            <strong>¡Error!</strong> Un error inesperado surgió al intentar poner en el index. Por favor, vuelva a intentarlo.
+                            </div>";
+                    }
+                }
+                
+                ?>
+
+
                  <!-- /. ROW  -->
               <div class="row">
                 <div class="col-lg-12">
