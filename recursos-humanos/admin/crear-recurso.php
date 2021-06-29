@@ -1,7 +1,7 @@
 <?php 
 
 require "includes/dbh.php";
-
+session_start();
 
 ?>
 
@@ -101,19 +101,24 @@ require "includes/dbh.php";
                                             subir archivos, imagenes etc, no se va a usar en esta web-->
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input class="form-control" name="nombre-recurso">
+                                            <input class="form-control" name="nombre-recurso" value="<?php if(isset($_SESSION['nombreRecurso']))
+                                            {echo $_SESSION['nombreRecurso']; } ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Datos Personales</label>
-                                            <input class="form-control" name="datos-personales-recurso">
+                                            <input class="form-control" name="datos-personales-recurso" value="<?php if(isset($_SESSION['datosRecurso']))
+                                            {echo $_SESSION['datosRecurso']; } ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Estudios</label>
-                                            <input class="form-control" name="estudios-recurso">
+                                            <input class="form-control" name="estudios-recurso" value="<?php if(isset($_SESSION['estudiosRecurso']))
+                                            {echo $_SESSION['estudiosRecurso']; } ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Experiencias</label>
-                                            <textarea class="form-control" rows="3" name="experiencias-recurso"></textarea>
+                                            <textarea class="form-control" rows="3" name="experiencias-recurso" value="<?php if(isset($_SESSION['experienciasRecurso']))
+                                            {echo $_SESSION['experienciasRecurso']; } ?>"><?php if(isset($_SESSION['experienciasRecurso']))
+                                            {echo $_SESSION['experienciasRecurso']; } ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Tecnología</label>
@@ -129,7 +134,15 @@ require "includes/dbh.php";
                                                 $tId = $rowTecnologias['n_tecnologia_id'];
                                                 $tName = $rowTecnologias['v_tecnologia_nombre'];
 
-                                                echo "<option value='".$tId."'>".$tName."</option>";
+                                                if (isset($_SESSION['tecnologiaID'])){
+
+                                                    if ($_SESSION['tecnologiaID'] == $tId){
+                                                        echo"<option value='".$tId."' selected=''>".$tName."</option>";
+                                                    }
+                                                    else { echo "<option value='".$tId."'>".$tName."</option>"; }
+                                                }
+                                                else { echo "<option value='".$tId."'>".$tName."</option>"; }
+
 
                                             }
                                             
@@ -139,25 +152,36 @@ require "includes/dbh.php";
                                         </div>
                                         <div class="form-group">
                                             <label>Hobbies</label>
-                                            <input class="form-control" name="hobbies-recurso">
+                                            <input class="form-control" name="hobbies-recurso" value="<?php if(isset($_SESSION['hobbiesRecurso']))
+                                            {echo $_SESSION['hobbiesRecurso']; } ?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Path</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon">www.web.com/</span>
-                                                <input type="text" class="form-control" placeholder="" name="path-recurso">
+                                                <input type="text" class="form-control" name="path-recurso" value="<?php if(isset($_SESSION['pathRecurso']))
+                                            {echo $_SESSION['pathRecurso']; } ?>">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Lugar del Index</label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="lugar-index-recurso" id="optionsRadiosInline1" value="option1" checked="">1
+                                                <input type="radio" name="lugar-index-recurso" id="optionsRadiosInline1" value="1" <?php if(isset($_SESSION['lugarIndexRecurso']))
+                                            { if ($_SESSION['lugarIndexRecurso'] == 1){
+                                                echo "checked=''";
+                                            } ; } ?>>1
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="lugar-index-recurso" id="optionsRadiosInline2" value="option2">2
+                                                <input type="radio" name="lugar-index-recurso" id="optionsRadiosInline2" value="2" <?php if(isset($_SESSION['lugarIndexRecurso']))
+                                            { if ($_SESSION['lugarIndexRecurso'] == 2){
+                                                echo "checked=''";
+                                            } ; } ?>>2
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="lugar-index-recurso" id="optionsRadiosInline3" value="option3">3
+                                                <input type="radio" name="lugar-index-recurso" id="optionsRadiosInline3" value="3" <?php if(isset($_SESSION['lugarIndexRecurso']))
+                                            { if ($_SESSION['lugarIndexRecurso'] == 3){
+                                                echo "checked=''";
+                                            } ; } ?>>3
                                             </label>
                                         </div>
                                         <button type="submit" class="btn btn-default" name="agregar-recurso-btn">Agregar Recurso</button>

@@ -1,7 +1,7 @@
 <?php
 
 require "dbh.php";
-
+session_start();
 
 
 if (isset($_POST['agregar-recurso-btn'])){
@@ -81,6 +81,15 @@ if (isset($_POST['agregar-recurso-btn'])){
                         VALUES ('$tecnologiaId','$name','$path','$datos','$estudios','$experiencias','$hobbies','$lugarIndex','1')";
     if (mysqli_query($conn, $sqlAddRecurso)){
         mysqli_close($conn);
+        unset($_SESSION['nombreRecurso']);
+        unset($_SESSION['datosRecurso']);
+        unset($_SESSION['estudiosRecurso']);
+        unset($_SESSION['experienciasRecurso']);
+        unset($_SESSION['tecnologiaID']);
+        unset($_SESSION['hobbiesRecurso']);
+        unset($_SESSION['pathRecurso']);
+        unset($_SESSION['lugarIndexRecurso']);
+
         header("Location: ../recursos.php?addrecurso=success");
         exit();
     } 
@@ -96,7 +105,17 @@ else{
 
 
 function formError($errorCode) {
+    require "dbh.php";
+    $_SESSION['nombreRecurso'] = $_POST['nombre-recurso'];
+    $_SESSION['datosRecurso'] = $_POST['datos-personales-recurso'];
+    $_SESSION['estudiosRecurso'] = $_POST['estudios-recurso'];
+    $_SESSION['experienciasRecurso'] = $_POST['experiencias-recurso'];
+    $_SESSION['tecnologiaID'] = $_POST['tecnologia-recurso'];
+    $_SESSION['hobbiesRecurso'] = $_POST['hobbies-recurso'];
+    $_SESSION['pathRecurso'] = $_POST['path-recurso'];
+    $_SESSION['lugarIndexRecurso'] = $_POST['lugar-index-recurso'];
 
+    mysqli_close($conn);
     header("Location: ../crear-recurso.php?addrecurso=".$errorCode);
     exit();
 
